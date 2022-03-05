@@ -142,11 +142,13 @@ export class ThreejsSceneComponent implements OnInit, AfterViewInit, OnDestroy {
 
     this.debugObject.reset = () => {
       // Collide sound stuff
-     /* for (const obj of this.objectsToUpdate) {
-        obj.body.removeEventListener('collide',)
-        world.remove(obj.body)
-        scene.remove(obj.mesh)
-      }*/
+      for (const obj of this.objectsToUpdate) {
+/* not neccesary due to no sound on collision
+        obj.body.removeEventListener('collide')
+*/
+        this.world.remove(obj.body)
+        this.scene.remove(obj.mesh)
+      }
       this.objectsToUpdate.splice(0,this.objectsToUpdate.length)
 
     }
