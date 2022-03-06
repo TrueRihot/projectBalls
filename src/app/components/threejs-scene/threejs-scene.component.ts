@@ -1,5 +1,6 @@
 import {AfterViewInit, Component, ElementRef, Input, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import * as THREE from 'three';
+import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js'
 import * as dat from 'lil-gui';
 import * as CANNON from 'cannon';
 import {OrbitControls} from "three/examples/jsm/controls/OrbitControls";
@@ -34,6 +35,12 @@ export class ThreejsSceneComponent implements OnInit, AfterViewInit, OnDestroy {
     return this.canvasRef.nativeElement;
   }
   private loader: THREE.TextureLoader = new THREE.TextureLoader();
+
+  // Custom Models
+  private gltfLoader: GLTFLoader = new GLTFLoader();
+  private tablePath: string = "/assets/tischglb.glb";
+
+
   //private geometry: THREE.BoxGeometry = new THREE.BoxGeometry(1,1,1);
   //private material: THREE.MeshBasicMaterial = new THREE.MeshBasicMaterial({map: this.loader.load(this.texture)});
 
@@ -196,7 +203,15 @@ export class ThreejsSceneComponent implements OnInit, AfterViewInit, OnDestroy {
       this.farClippingPlane
     );
 
-    this.camera.position.set(- 6, 6, 6);
+    this.camera.position.set(- 100, 100, 100);
+
+
+    // loading the table
+    this.gltfLoader.load(this.tablePath, (gltf) => {
+      this.scene.add(gltf.scene);
+    });
+
+
   }
 
   private getAspectRatio(): number {
