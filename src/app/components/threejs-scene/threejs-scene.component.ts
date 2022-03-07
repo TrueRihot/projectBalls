@@ -5,6 +5,7 @@ import * as dat from 'lil-gui';
 import * as CANNON from 'cannon';
 import {OrbitControls} from "three/examples/jsm/controls/OrbitControls";
 import {Vec3} from "cannon";
+import Sizes from './game/utils/sizes';
 
 @Component({
   selector: 'app-threejs-scene',
@@ -25,6 +26,12 @@ export class ThreejsSceneComponent implements OnInit, AfterViewInit, OnDestroy {
   @Input() rotationSpeedY: number = 0.01;
   @Input() size: number = 200;
   // CUBE end
+
+  // instantioation of refactores stuffs and shit
+  private sizes = new Sizes();
+  private camera =
+
+
 
   private windowSize: { width: number, height: number } = {width: window.innerWidth, height: window.innerHeight};
   private gui = new dat.GUI();
