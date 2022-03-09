@@ -8,13 +8,13 @@ export let gameInstance: Game;
 
 export class Game {
   private static _instance: Game;
-  public sizes: Sizes | undefined;
-  public camera: Camera | undefined;
-  public time: Time | undefined;
+  public sizes: Sizes;
+  public camera: Camera;
+  public time: Time;
   public scene: THREE.Scene = new THREE.Scene();
-  public canvas;
+  public canvas: HTMLCanvasElement ;
 
-  private constructor(canvas: HTMLCanvasElement | null = null) {
+  private constructor(canvas: HTMLCanvasElement = undefined) {
     this.canvas = canvas;
   }
 
@@ -24,7 +24,7 @@ export class Game {
     this.time = new Time();
   }
 
-  public static getInstance(canvas: HTMLCanvasElement | null = null):Game
+  public static getInstance(canvas: HTMLCanvasElement = undefined):Game
   {
     if (!Game._instance) {
       gameInstance= new Game(canvas);
