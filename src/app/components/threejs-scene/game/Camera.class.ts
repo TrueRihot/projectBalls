@@ -10,7 +10,7 @@ export default class Camera {
   private sizes: Sizes;
   private canvas: HTMLCanvasElement;
   private scene: THREE.Scene;
-  private controls: OrbitControls;
+  public controls: OrbitControls;
 
   constructor() {
     this.game = gameInstance;

@@ -59,7 +59,7 @@ export class ThreejsSceneComponent implements OnInit, AfterViewInit, OnDestroy {
 
   // Custom Models
   private gltfLoader: GLTFLoader = new GLTFLoader();
-  private tablePath: string = "/assets/tischglb.glb";
+  private tablePath: string = "/^";
 
 
   //private geometry: THREE.BoxGeometry = new THREE.BoxGeometry(1,1,1);
