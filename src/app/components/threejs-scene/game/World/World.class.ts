@@ -2,6 +2,7 @@ import {Game, gameInstance} from '../Game.class'
 import Environment from './Environment.class'
 import Resources from "../utils/resources.class";
 import Table from "./Table.class";
+import {Ball} from "./Ball.class";
 
 export default class World
 {
@@ -12,6 +13,7 @@ export default class World
   floor;
   table;
   environment: Environment;
+  ball: Ball;
 
   constructor()
   {
@@ -25,6 +27,7 @@ export default class World
       // Setup
       this.environment = new Environment();
       this.table = new Table();
+      this.ball = new Ball();
     })
   }
 
