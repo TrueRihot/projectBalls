@@ -5,6 +5,8 @@ import * as dat from 'lil-gui';
 import * as CANNON from 'cannon';
 import {OrbitControls} from "three/examples/jsm/controls/OrbitControls";
 import {Vec3} from "cannon";
+import Sizes from './game/utils/sizes';
+import {Game} from "./game/Game.class";
 import { gsap } from 'gsap'
 
 @Component({
@@ -14,8 +16,21 @@ import { gsap } from 'gsap'
 })
 export class ThreejsSceneComponent implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild('canvas') private canvasRef!: ElementRef<HTMLCanvasElement>;
+  private game: Game | undefined;
 
-  @Input() cameraZ: number = 400;
+  ngOnInit() {
+  }
+
+  ngOnDestroy() {
+  }
+
+  ngAfterViewInit() {
+    this.game = Game.getInstance(this.canvasRef.nativeElement);
+    this.game.init();
+    console.log(this.game)
+  }
+
+  /*@Input() cameraZ: number = 400;
   @Input() fieldOfView: number = 1;
   @Input('nearClipping') nearClippingPlane: number = 1;
   @Input('farClipping') farClippingPlane: number = 1000;
@@ -26,6 +41,11 @@ export class ThreejsSceneComponent implements OnInit, AfterViewInit, OnDestroy {
   @Input() rotationSpeedY: number = 0.01;
   @Input() size: number = 200;
   // CUBE end
+
+  // instantioation of refactores stuffs and shit
+  private sizes = new Sizes();
+
+
 
   private windowSize: { width: number, height: number } = {width: window.innerWidth, height: window.innerHeight};
   private gui = new dat.GUI();
@@ -39,7 +59,7 @@ export class ThreejsSceneComponent implements OnInit, AfterViewInit, OnDestroy {
 
   // Custom Models
   private gltfLoader: GLTFLoader = new GLTFLoader();
-  private tablePath: string = "/assets/tischglb.glb";
+  private tablePath: string = "/^";
 
 
   //private geometry: THREE.BoxGeometry = new THREE.BoxGeometry(1,1,1);
@@ -153,9 +173,9 @@ export class ThreejsSceneComponent implements OnInit, AfterViewInit, OnDestroy {
     this.debugObject.reset = () => {
       // Collide sound stuff
       for (const obj of this.objectsToUpdate) {
-/* not neccesary due to no sound on collision
+/!* not neccesary due to no sound on collision
         obj.body.removeEventListener('collide')
-*/
+*!/
         this.world.remove(obj.body)
         this.scene.remove(obj.mesh)
       }
@@ -221,10 +241,10 @@ export class ThreejsSceneComponent implements OnInit, AfterViewInit, OnDestroy {
     return this.canvas.clientWidth / this.canvas.clientHeight;
   }
 
-  /*private animateCube(cube: THREE.Mesh): void {
+  /!*private animateCube(cube: THREE.Mesh): void {
     cube.rotation.x += this.rotationSpeedX;
     cube.rotation.y += this.rotationSpeedY;
-  }*/
+  }*!/
 
   private createCube(size: number, position:Vec3):void {
     const mesh = new THREE.Mesh(this.cubeGeometry, this.basicMaterial);
@@ -241,8 +261,8 @@ export class ThreejsSceneComponent implements OnInit, AfterViewInit, OnDestroy {
       position: new CANNON.Vec3(position.x, position.y, position.z),
       shape
     });
-   /* body.addEventListener('collide', (e) => {
-    })*/
+   /!* body.addEventListener('collide', (e) => {
+    })*!/
     this.world.addBody(body);
     this.objectsToUpdate.push({mesh,body});
   }
@@ -274,8 +294,8 @@ export class ThreejsSceneComponent implements OnInit, AfterViewInit, OnDestroy {
       mesh,
       body
     })
-   /* body.addEventListener('collide', (e) => {
-    })*/
+   /!* body.addEventListener('collide', (e) => {
+    })*!/
   }
   // IMPORTANT ANIMATION VARIABLES
   private clock = new THREE.Clock()
@@ -319,5 +339,5 @@ export class ThreejsSceneComponent implements OnInit, AfterViewInit, OnDestroy {
       component.controls?.update();
 
     }());   // call initially
-  }
+  }*/
 }
