@@ -6,8 +6,8 @@ import * as CANNON from 'cannon';
 import {OrbitControls} from "three/examples/jsm/controls/OrbitControls";
 import {Vec3} from "cannon";
 import Sizes from './game/utils/sizes';
-
 import {Game} from "./game/Game.class";
+import { gsap } from 'gsap'
 
 @Component({
   selector: 'app-threejs-scene',
@@ -147,6 +147,8 @@ export class ThreejsSceneComponent implements OnInit, AfterViewInit, OnDestroy {
     this.createSphere(0.5, new CANNON.Vec3(0, 2, 0));
     this.createSphere(1, new CANNON.Vec3(1.5, 5, 0));
 
+    // move camera
+    // gsap.to(this.camera.position, {x: -400, duration: 10});
   }
 
   ngOnDestroy() {
