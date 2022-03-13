@@ -20,7 +20,6 @@ export default class Table
   model: THREE.Object3D;
   animation: any;
 
-
   debugFolder: any;
 
   constructor()
@@ -63,13 +62,25 @@ export default class Table
   };
 
   setPhysics() {
-    const floorShape = new CANNON.Plane();
-    const floorBody = new CANNON.Body();
-    floorBody.mass = 0;
-    floorBody.position.set(0, 2.02, 0);
-    floorBody.quaternion.setFromAxisAngle(new CANNON.Vec3(-1 , 0, 0), Math.PI / 2);
-    floorBody.addShape(floorShape);
-    this.physics.physicsWorld.addBody(floorBody);
+
+    const size = {
+      x: 2.1,
+      y: 2.02,
+      z: 1
+    }
+
+    const tableShape = new CANNON.Box(new CANNON.Vec3(size.x, size.y, size.z));
+    // const temp = new THREE.Mesh(
+    //   new THREE.BoxGeometry(size.x * 2, size.y * 2 , size.z * 2),
+    //   new THREE.MeshBasicMaterial({color: 0xffffff})
+    // );
+    // this.scene.add(temp);
+    const tableBody = new CANNON.Body();
+    tableBody.mass = 0;
+    tableBody.position.set(0,0,0);
+    tableBody.addShape(tableShape);
+    this.physics.physicsWorld.addBody(tableBody);
+    console.log(tableBody)
   };
 
   setAnimation()

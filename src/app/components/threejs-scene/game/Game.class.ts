@@ -47,7 +47,8 @@ export class Game {
 
   resize() {
     this.sizes.updateSizes();
-    this.camera.update();
+    this.camera.resize();
+    this.renderer.resize();
   }
 
   update() {
