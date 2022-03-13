@@ -1,13 +1,17 @@
-import * as THREE from 'three'
+import * as THREE from 'three';
+import * as CANNON from "cannon";
+
 import {Game, gameInstance} from '../Game.class';
 import Resources from "../utils/resources.class";
 import Time from "../utils/time.class";
 import Debug from "../utils/Debugger.class";
+import Physics from "./Physics.class";
 
 export default class Table
 {
   game: Game;
   scene: THREE.Scene;
+  physics: Physics;
   resources: Resources;
   time: Time;
   debug: Debug;
@@ -23,9 +27,10 @@ export default class Table
   {
     this.game = gameInstance;
     this.scene = this.game.scene;
-    this.resources = this.game.resources
-    this.time = this.game.time
-    this.debug = this.game.debug
+    this.physics = this.game.world.physicsWorld;
+    this.resources = this.game.resources;
+    this.time = this.game.time;
+    this.debug = this.game.debug;
 
     // Debug
     if(this.debug.active)
@@ -36,23 +41,36 @@ export default class Table
     // Resource
     this.resource = this.resources.items.tableModel
 
-    this.setModel()
+    this.setModel();
+    this.setPhysics();
   }
 
   setModel()
   {
-    this.model = this.resource.scene
-    this.model.scale.set(1, 1, 1)
-    this.scene.add(this.model)
+    this.model = this.resource.scene;
+    this.model.scale.set(1, 1, 1);
+    this.scene.add(this.model);
+    console.log(this.model);
 
     this.model.traverse((child) =>
     {
       if(child instanceof THREE.Mesh)
       {
-        child.castShadow = true
+        child.castShadow = true;
+        child.receiveShadow = true;
       }
     })
-  }
+  };
+
+  setPhysics() {
+    const floorShape = new CANNON.Plane();
+    const floorBody = new CANNON.Body();
+    floorBody.mass = 0;
+    floorBody.position.set(0, 2.02, 0);
+    floorBody.quaternion.setFromAxisAngle(new CANNON.Vec3(-1 , 0, 0), Math.PI / 2);
+    floorBody.addShape(floorShape);
+    this.physics.physicsWorld.addBody(floorBody);
+  };
 
   setAnimation()
   {
@@ -100,6 +118,6 @@ export default class Table
 
   update()
   {
-    this.animation.mixer.update(this.time.delta * 0.001)
+    //this.animation.mixer.update(this.time.delta * 0.001)
   }
 }
