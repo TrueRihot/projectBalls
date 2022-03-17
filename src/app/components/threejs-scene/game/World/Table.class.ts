@@ -64,11 +64,14 @@ export default class Table
   };
 
   setPhysics() {
+    // Fixed size of the CURRENT Table TODO: Should be set on laod to allow scaling
     const size = {
       x: 2.35,
       y: 2.03,
       z: 1.2
     }
+
+    // getting the 6 sidepannels of our table
     this.sides = [
       new Vec3(size.x / 2, size.y, size.z + size.x / 10),
       new Vec3(size.x / 2, size.y, -size.z - size.x / 10),
@@ -78,6 +81,7 @@ export default class Table
       new Vec3(-size.x - size.x / 13, size.y, 0)
     ];
 
+    // debug stuff
     if (this.debug.active) {
       const temp = new THREE.Mesh(
          new THREE.BoxGeometry(size.x * 2, size.y * 2 , size.z * 2),
@@ -86,6 +90,7 @@ export default class Table
       this.scene.add(temp);
     }
 
+    // Table instance for Physics
     const tableBody = new CANNON.Body();
     const tableShape = new CANNON.Box(new CANNON.Vec3(size.x, size.y, size.z));
 
@@ -112,6 +117,8 @@ export default class Table
       tableBody.addShape(box ,new Vec3(side.x, side.y, side.z))
     }
 
+    tableBody.material = this.game.world.physicsWorld.tableMaterial;
+
     tableBody.mass = 0;
     tableBody.position.set(0,0,0);
     tableBody.addShape(tableShape);
@@ -130,54 +137,5 @@ export default class Table
   private getSideBoundries(size , isRotated: boolean = false):Box {
     const barryR = this.setBarrierSize(size, isRotated);
     return new CANNON.Box(new CANNON.Vec3(barryR.x, barryR.y, barryR.z));
-  }
-
-  setAnimation()
-  {
-    this.animation = {}
-
-    // Mixer
-    this.animation.mixer = new THREE.AnimationMixer(this.model)
-
-    // Actions
-    this.animation.actions = {}
-
-    this.animation.actions.idle = this.animation.mixer.clipAction(this.resource.animations[0])
-    this.animation.actions.walking = this.animation.mixer.clipAction(this.resource.animations[1])
-    this.animation.actions.running = this.animation.mixer.clipAction(this.resource.animations[2])
-
-    this.animation.actions.current = this.animation.actions.idle
-    this.animation.actions.current.play()
-
-    // Play the action
-    this.animation.play = (name) =>
-    {
-      const newAction = this.animation.actions[name]
-      const oldAction = this.animation.actions.current
-
-      newAction.reset()
-      newAction.play()
-      newAction.crossFadeFrom(oldAction, 1)
-
-      this.animation.actions.current = newAction
-    }
-
-    // Debug
-    if(this.debug.active)
-    {
-      const debugObject = {
-        playIdle: () => { this.animation.play('idle') },
-        playWalking: () => { this.animation.play('walking') },
-        playRunning: () => { this.animation.play('running') }
-      }
-      this.debugFolder.add(debugObject, 'playIdle')
-      this.debugFolder.add(debugObject, 'playWalking')
-      this.debugFolder.add(debugObject, 'playRunning')
-    }
-  }
-
-  update()
-  {
-    //this.animation.mixer.update(this.time.delta * 0.001)
   }
 }
