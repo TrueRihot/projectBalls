@@ -19,7 +19,7 @@ export class Ball {
 
     this.debugPosition = {
       x: Math.random() * 2 - 1,
-      y: Math.random() * 2 - 1,
+      y: Math.random() * 1,
       z: Math.random() * 2 - 1
     }
 
@@ -35,7 +35,7 @@ export class Ball {
         roughness: 0.4,
       })
     );
-    this.mesh.position.set(0, 4, 0);
+    this.mesh.position.set(0, 2, 0);
     this.mesh.castShadow = true;
     this.mesh.receiveShadow = true;
     this.scene.add(this.mesh);
@@ -46,10 +46,10 @@ export class Ball {
     this.body = new CANNON.Body({
       mass: 1,
       material: this.physicsWorld.defaultMaterial,
-      position: new CANNON.Vec3(this.debugPosition.x ,5,this.debugPosition.z),
+      position: new CANNON.Vec3(this.debugPosition.x ,2,this.debugPosition.z),
       shape,
     });
-    this.body.position.set(this.debugPosition.x, 5, this.debugPosition.z);
+    this.body.position.set(this.debugPosition.x, 2, this.debugPosition.z);
     this.physicsWorld.physicsWorld.addBody(this.body);
   }
 
@@ -57,5 +57,9 @@ export class Ball {
     // as any because vec3 == Vector3
     this.mesh.position.copy(this.body.position as any);
     this.mesh.quaternion.copy(this.body.quaternion as any);
+  }
+
+  applyForce() {
+    this.body.applyLocalForce(new CANNON.Vec3(Math.random() * 100 -50, 0, Math.random() * 100 - 50), new CANNON.Vec3(0, 0, 0));
   }
 }

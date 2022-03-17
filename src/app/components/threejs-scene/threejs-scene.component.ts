@@ -1,13 +1,5 @@
-import {AfterViewInit, Component, ElementRef, Input, OnDestroy, OnInit, ViewChild} from '@angular/core';
-import * as THREE from 'three';
-import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js'
-import * as dat from 'lil-gui';
-import * as CANNON from 'cannon';
-import {OrbitControls} from "three/examples/jsm/controls/OrbitControls";
-import {Vec3} from "cannon";
-import Sizes from './game/utils/sizes';
+import {AfterViewInit, Component, ElementRef, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {Game} from "./game/Game.class";
-import { gsap } from 'gsap'
 
 @Component({
   selector: 'app-threejs-scene',

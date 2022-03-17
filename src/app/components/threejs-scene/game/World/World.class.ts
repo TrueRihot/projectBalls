@@ -18,7 +18,6 @@ export default class World
   floor;
   table;
   environment: Environment;
-  ball: Ball;
   ballsArray: Ball[] = [];
 
   constructor()
@@ -37,6 +36,10 @@ export default class World
       this.floor = new Floor();
       this.createBalls(8);
       this.isLoaded = true;
+      this.ballsArray.forEach((ball) =>
+      {
+        ball.applyForce();
+      });
     });
   }
 
