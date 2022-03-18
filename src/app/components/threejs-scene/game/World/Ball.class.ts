@@ -28,7 +28,7 @@ export class Ball {
   }
   private setModel() {
     this.mesh = new THREE.Mesh(
-      new THREE.SphereGeometry(0.1, 32, 32),
+      new THREE.SphereGeometry(0.1, 128, 128),
       new THREE.MeshStandardMaterial({
         envMap: this.game.world.environment.environmentMap,
         metalness: 0.3,
@@ -64,8 +64,11 @@ export class Ball {
     this.mesh.material.color.set('#ffffff');
   }
 
-  applyForce() {
+  applyForce(face: THREE.Face = undefined) {
+    const direction = face ? face.normal.clone().normalize().multiply(new THREE.Vector3(-1))  : new THREE.Vector3(0) //new THREE.Vector3(Math.random() * 100 -50, 0, Math.random() * 100 - 50).normalize();
+    let force = new CANNON.Vec3(direction.x, direction.y, direction.z);
+    force = force.scale(100);
     this.body.sleepState = CANNON.Body.AWAKE;
-    this.body.applyLocalForce(new CANNON.Vec3(Math.random() * 100 -50, 0, Math.random() * 100 - 50), new CANNON.Vec3(0, 0, 0));
+    this.body.applyLocalForce(force, new CANNON.Vec3(0, 0, 0));
   }
 }
