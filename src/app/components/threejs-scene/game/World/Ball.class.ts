@@ -45,9 +45,11 @@ export class Ball {
     const shape = new CANNON.Sphere(0.1);
     this.body = new CANNON.Body({
       mass: 1,
-      material: this.physicsWorld.defaultMaterial,
+      material: this.physicsWorld.ballMaterial,
       position: new CANNON.Vec3(this.debugPosition.x ,2,this.debugPosition.z),
       shape,
+      linearDamping: 0.1,
+      angularDamping: 0.1,
     });
     this.body.position.set(this.debugPosition.x, 2, this.debugPosition.z);
     this.physicsWorld.physicsWorld.addBody(this.body);

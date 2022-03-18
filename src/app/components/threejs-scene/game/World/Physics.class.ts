@@ -10,6 +10,7 @@ export default class Physics {
   defaultMaterial: CANNON.Material;
 
   tableMaterial: CANNON.Material;
+  ballMaterial: CANNON.Material;
   tableBallMaterial: CANNON.ContactMaterial;
 
   constructor() {
@@ -19,7 +20,7 @@ export default class Physics {
     this.physicsWorld = new CANNON.World();
     this.physicsWorld.broadphase = new CANNON.SAPBroadphase(this.physicsWorld);
     // allows bodies to be skipped when not moving
-    //this.physicsWorld.allowSleep = true;
+    this.physicsWorld.allowSleep = true;
     // Basic earth gravity -- Play around to see funny results
     this.physicsWorld.gravity.set(0, -9.82, 0);
 
@@ -38,14 +39,16 @@ export default class Physics {
 
     // Instanciateing Table Material
     this.tableMaterial = new CANNON.Material('table');
+    this.ballMaterial = new CANNON.Material('ball');
 
     // Instanciateing Table Ball Material
     this.tableBallMaterial = new CANNON.ContactMaterial(
-      this.defaultMaterial,
+      this.ballMaterial,
       this.tableMaterial,
       {
-        friction: 5,
-        restitution: .9,
+        // Doesn't need friction since balls are not affected by it.
+        // If you want to alter the slowdown effect of the balls, goto the Ball.class.ts and tweak linear and angular damping
+        restitution: .8,
       }
     );
     this.physicsWorld.addContactMaterial(this.tableBallMaterial);
