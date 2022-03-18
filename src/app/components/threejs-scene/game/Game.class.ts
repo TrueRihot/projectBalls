@@ -8,6 +8,7 @@ import Debug from "./utils/Debugger.class";
 import Resources from "./utils/resources.class";
 import sources from "./sources";
 import World from "./World/World.class";
+import MouseRaycast from "./World/MouseRaycast.class";
 
 export let gameInstance: Game;
 
@@ -21,6 +22,7 @@ export class Game {
   public renderer: Renderer;
   public resources: Resources;
   public world: World;
+  public mouseRaycaster: MouseRaycast;
   public debug: Debug;
 
   private constructor(canvas: HTMLCanvasElement = undefined) {
@@ -35,6 +37,7 @@ export class Game {
     this.renderer = new Renderer();
     this.resources = new Resources(sources);
     this.world = new World();
+    this.mouseRaycaster = new MouseRaycast();
 
     this.time.on('tick' , () => {
       this.update();
@@ -54,6 +57,7 @@ export class Game {
   update() {
     this.camera.update();
     this.world.update();
+    this.mouseRaycaster.update();
     this.renderer.update();
   }
 

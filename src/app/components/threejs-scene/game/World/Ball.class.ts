@@ -38,6 +38,7 @@ export class Ball {
     this.mesh.position.set(0, 2, 0);
     this.mesh.castShadow = true;
     this.mesh.receiveShadow = true;
+    this.mesh.name = "ball";
     this.scene.add(this.mesh);
   }
 
@@ -59,9 +60,12 @@ export class Ball {
     // as any because vec3 == Vector3
     this.mesh.position.copy(this.body.position as any);
     this.mesh.quaternion.copy(this.body.quaternion as any);
+    // @ts-ignore Dont know why this is needed
+    this.mesh.material.color.set('#ffffff');
   }
 
   applyForce() {
+    this.body.sleepState = CANNON.Body.AWAKE;
     this.body.applyLocalForce(new CANNON.Vec3(Math.random() * 100 -50, 0, Math.random() * 100 - 50), new CANNON.Vec3(0, 0, 0));
   }
 }
