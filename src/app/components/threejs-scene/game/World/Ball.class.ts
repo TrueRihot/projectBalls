@@ -32,7 +32,8 @@ export class Ball {
       new THREE.MeshStandardMaterial({
         envMap: this.game.world.environment.environmentMap,
         metalness: 0.3,
-        roughness: 0.4,
+        roughness: 0.1,
+        map: this.game.resources.items.ballTestTexture,
       })
     );
     this.mesh.position.set(0, 2, 0);

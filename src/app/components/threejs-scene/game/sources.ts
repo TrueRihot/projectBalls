@@ -15,6 +15,11 @@ export default [
   {
     name: 'tableModel',
     type: 'gltfModel',
-    path: '/assets/tischglb.glb'
+    path: '/assets/tischglb2.glb'
+  },
+  {
+    name: 'ballTestTexture',
+    type: 'texture',
+    path: '/assets/textures/balls/test.png'
   }
 ]

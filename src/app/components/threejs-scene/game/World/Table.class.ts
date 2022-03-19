@@ -45,20 +45,39 @@ export default class Table
 
     this.setModel();
     this.setPhysics();
+
+    if (this.debug.active) {
+      this.debugFolder.add(this.model.scale, 'x')
+      .name('scale')
+      .min(0.1)
+      .max(10)
+      .step(0.0001)
+      .onChange(change => {
+        console.log(change);
+        this.model.scale.set(change, change, change)
+      });
+    }
+
   }
 
   setModel()
   {
     this.model = this.resource.scene;
-    this.model.scale.set(1, 1, 1);
+    this.model.scale.set(.44255, .44255 , .44255  );
     this.scene.add(this.model);
 
     this.model.traverse((child) =>
     {
       if(child instanceof THREE.Mesh)
       {
-        child.castShadow = true;
-        child.receiveShadow = true;
+        if (child.name.includes('Cube')) {
+          child.castShadow = true;
+          child.receiveShadow = true;
+        }
+        else {
+          child.receiveShadow = true;
+        }
+
       }
     })
   };

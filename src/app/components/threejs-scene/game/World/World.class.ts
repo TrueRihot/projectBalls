@@ -33,7 +33,7 @@ export default class World
       // Setup
       this.environment = new Environment();
       this.table = new Table();
-      this.floor = new Floor();
+      //this.floor = new Floor();
       this.createBalls(8);
       this.isLoaded = true;
       this.ballsArray.forEach((ball) =>
