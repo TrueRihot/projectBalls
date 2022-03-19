@@ -32,7 +32,8 @@ export class Ball {
       new THREE.MeshStandardMaterial({
         envMap: this.game.world.environment.environmentMap,
         metalness: 0.3,
-        roughness: 0.4,
+        roughness: 0.1,
+        map: this.game.resources.items.ballTestTexture,
       })
     );
     this.mesh.position.set(0, 2, 0);
@@ -51,9 +52,10 @@ export class Ball {
       shape,
       linearDamping: 0.1,
       angularDamping: 0.1,
+      sleepTimeLimit: 50,
     });
-    this.body.position.set(this.debugPosition.x, 2, this.debugPosition.z);
     this.physicsWorld.physicsWorld.addBody(this.body);
+    this.body.position.set(this.debugPosition.x, 2, this.debugPosition.z);
   }
 
   update() {
