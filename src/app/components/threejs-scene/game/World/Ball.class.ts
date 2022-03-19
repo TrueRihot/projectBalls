@@ -51,9 +51,10 @@ export class Ball {
       shape,
       linearDamping: 0.1,
       angularDamping: 0.1,
+      sleepTimeLimit: 50,
     });
-    this.body.position.set(this.debugPosition.x, 2, this.debugPosition.z);
     this.physicsWorld.physicsWorld.addBody(this.body);
+    this.body.position.set(this.debugPosition.x, 2, this.debugPosition.z);
   }
 
   update() {
