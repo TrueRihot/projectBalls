@@ -65,16 +65,27 @@ export default class Table
     this.model = this.resource.scene;
     this.model.scale.set(.44255, .44255 , .44255  );
     this.scene.add(this.model);
-
     this.model.traverse((child) =>
     {
       if(child instanceof THREE.Mesh)
       {
+        // Table Stuff
         if (child.name.includes('Cube')) {
           child.castShadow = true;
           child.receiveShadow = true;
-        }
-        else {
+            // green carpet thingy on top
+          if (child.material.name.includes('Green')) {
+            child.material.roughness = 2.4
+            if(this.debug.active){
+              this.debugFolder.add(child.material, 'roughness', 0, 10).name('table green roughness').step(.1);
+            }
+          }
+          // Floor texture stuff
+        } else if (child.name.includes('Floor')) {
+          child.material.alphaMap = this.resources.items.roundAlpha;
+          child.material.transparent = true;
+          child.material.receiveShadow = false;
+        } else {
           child.receiveShadow = true;
         }
 
