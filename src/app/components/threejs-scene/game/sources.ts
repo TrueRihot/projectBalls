@@ -21,5 +21,10 @@ export default [
     name: 'ballTestTexture',
     type: 'texture',
     path: '/assets/textures/balls/test.png'
+  },
+  {
+    name: 'roundAlpha',
+    type: 'texture',
+    path: '/assets/textures/radialAlpha.png'
   }
 ]
