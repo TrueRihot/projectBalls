@@ -84,7 +84,7 @@ export default class Table
         } else if (child.name.includes('Floor')) {
           child.material.alphaMap = this.resources.items.roundAlpha;
           child.material.transparent = true;
-          child.material.receiveShadow = false;
+          child.receiveShadow = true;
         } else {
           child.receiveShadow = true;
         }
