@@ -82,4 +82,9 @@ export default class Resources extends EventEmitter
       this.trigger('ready')
     }
   }
+
+  getBallTexutre(number: number) {
+    if (!number) return null
+    return this.items['ball' + number + 'Texture']
+  }
 }

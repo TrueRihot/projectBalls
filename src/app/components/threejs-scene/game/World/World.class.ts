@@ -34,7 +34,7 @@ export default class World
       this.environment = new Environment();
       this.table = new Table();
       //this.floor = new Floor();
-      this.createBalls(8);
+      this.createBalls(16);
       this.isLoaded = true;
       this.ballsArray.forEach((ball) =>
       {
@@ -47,7 +47,7 @@ export default class World
   {
     for (let i = 0; i < number; i++)
     {
-      this.ballsArray.push(new Ball());
+      this.ballsArray.push(new Ball(i));
     }
   }
 

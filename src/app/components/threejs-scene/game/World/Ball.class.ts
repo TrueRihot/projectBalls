@@ -11,11 +11,13 @@ export class Ball {
 
   mesh: THREE.Mesh;
   body: CANNON.Body;
+  number: number;
 
-  constructor() {
+  constructor(number: number = -1) {
     this.game = gameInstance;
     this.scene = this.game.scene;
     this.physicsWorld = this.game.world.physicsWorld;
+    this.number = number;
 
     this.debugPosition = {
       x: Math.random() * 2 - 1,
@@ -33,13 +35,13 @@ export class Ball {
         envMap: this.game.world.environment.environmentMap,
         metalness: 0.3,
         roughness: 0.1,
-        map: this.game.resources.items.ballTestTexture,
+        map: this.game.resources.getBallTexutre(this.number),
       })
     );
     this.mesh.position.set(0, 2, 0);
     this.mesh.castShadow = true;
     this.mesh.receiveShadow = true;
-    this.mesh.name = "ball";
+    this.mesh.name = "ball" + this.number;
     this.scene.add(this.mesh);
   }
 
@@ -69,8 +71,8 @@ export class Ball {
   applyForce(face: THREE.Face = undefined) {
     const direction = face ? face.normal.clone().normalize().multiply(new THREE.Vector3(-1))  : new THREE.Vector3(0) //new THREE.Vector3(Math.random() * 100 -50, 0, Math.random() * 100 - 50).normalize();
     let force = new CANNON.Vec3(direction.x, direction.y, direction.z);
-    force = force.scale(100);
+    force = force.scale(5);
     this.body.sleepState = CANNON.Body.AWAKE;
-    this.body.applyLocalForce(force, new CANNON.Vec3(0, 0, 0));
+    this.body.applyLocalForce(force, this.body.position);
   }
 }
