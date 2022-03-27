@@ -1,3 +1,10 @@
-<app-help></app-help>
+
+
+<app-ui [showUi]="showUi" [players]="gameService.players$ | async" [totalMatchCount]="gameService.totalMatchCount"></app-ui>
+
+<div>
+  <button (click)="uiService.showUi()">Show UI</button>
+  <button (click)="uiService.hideUi()">Hide UI</button>
+</div>
 
 <app-threejs-scene></app-threejs-scene>

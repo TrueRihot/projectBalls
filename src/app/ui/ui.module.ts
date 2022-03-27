@@ -1,20 +1,24 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { HelpComponent } from './components/help/help.component';
+import { PlayerStatsComponent } from './components/player-stats/player-stats.component';
 import { UiComponent } from './components/ui/ui.component';
+import { MatchStatsComponent } from './components/match-stats/match-stats.component';
 import { UiService } from './services/ui.service';
 
 
 
 @NgModule({
-  declarations: [],
+  declarations: [
+    UiComponent,
+    PlayerStatsComponent,
+    MatchStatsComponent,
+  ],
   imports: [
-    CommonModule,
-    // HelpComponent,
+    CommonModule
+  ],
+  exports: [
     UiComponent
   ],
-  exports: [UiComponent, HelpComponent],
-
   providers: [
     UiService
   ]
