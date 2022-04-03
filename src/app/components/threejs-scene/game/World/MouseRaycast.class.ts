@@ -30,9 +30,7 @@ export default class MouseRaycast {
   pointerDown(event: MouseEvent) {
     this.pointerMove(event);
     const intersectionObj = this.intersects[0];
-    if (this.intersects.length > 0 && intersectionObj.object.name.includes('ball')) {
-      const intersectionID = intersectionObj.object.id;
-      this.game.world.ballsArray.find(ball => ball.mesh.id === intersectionID).applyForce(intersectionObj.face);
+    if (this.intersects.length > 0 && intersectionObj.object.name.includes('playball')) {
     }
   }
 
@@ -52,7 +50,7 @@ export default class MouseRaycast {
       for(let i = 0; i < this.intersects.length; i++) {
         if(i > 2) break;
         const intersectsObj = this.intersects[i];
-        if(intersectsObj.object.name.includes('ball')) {
+        if(intersectsObj.object.name.includes('playball')) {
           this.intersectionPointer.setPosition(intersectsObj.point);
           !this.intersectionPointer.isInScene ? this.intersectionPointer.toggleInScene() : null;
           return;

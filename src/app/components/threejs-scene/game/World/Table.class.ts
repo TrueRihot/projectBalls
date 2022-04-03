@@ -20,6 +20,7 @@ export default class Table
   resource: any;
   model: THREE.Object3D;
   animation: any;
+  size;
 
   sides: Vec3[];
 
@@ -33,6 +34,11 @@ export default class Table
     this.resources = this.game.resources;
     this.time = this.game.time;
     this.debug = this.game.debug;
+    this.size = {
+      x: 2.35,
+      y: 2.03,
+      z: 1.2
+    };
 
     // Debug
     if(this.debug.active)
@@ -89,24 +95,25 @@ export default class Table
           child.receiveShadow = true;
         }
 
+      }else if (child instanceof THREE.Light) {
+        child.intensity = 5;
+        child.castShadow = false;;
       }
     })
   };
 
   setPhysics() {
-    // Fixed size of the CURRENT Table TODO: Should be set on laod to allow scaling
-    const size = {
-      x: 2.35,
-      y: 2.03,
-      z: 1.2
-    }
+    // Fixed size of the CURRENT Table
+    const size = this.size;
+
+    const modelOffst = .025;
 
     // getting the 6 sidepannels of our table
     this.sides = [
-      new Vec3(size.x / 2, size.y, size.z + size.x / 10),
-      new Vec3(size.x / 2, size.y, -size.z - size.x / 10),
-      new Vec3(-size.x / 2, size.y, size.z + size.x / 10),
-      new Vec3(-size.x / 2, size.y, -size.z - size.x / 10),
+      new Vec3(size.x / 2 - modelOffst, size.y, size.z + size.x / 10),
+      new Vec3(size.x / 2 - modelOffst, size.y, -size.z - size.x / 10),
+      new Vec3(-size.x / 2 + modelOffst, size.y, size.z + size.x / 10),
+      new Vec3(-size.x / 2 + modelOffst, size.y, -size.z - size.x / 10),
       new Vec3(size.x + size.x / 13, size.y, 0),
       new Vec3(-size.x - size.x / 13, size.y, 0)
     ];
@@ -157,10 +164,11 @@ export default class Table
 
   // get size of border box. If far side rotate it
   private setBarrierSize(size, isRotated: boolean = false):Vec3 {
+    const sizeOffest = 2.3;
     if (isRotated) {
-      return new Vec3(size.x / 10, size.y / 10,  size.x / 2.5);
+      return new Vec3(size.x / 10, size.y / 10,  size.x / sizeOffest + .04);
     }
-    return new Vec3(size.x / 2.5, size.y / 10, size.x / 10);
+    return new Vec3(size.x / sizeOffest, size.y / 10, size.x / 10);
   }
 
   // box builder for each side of the table
