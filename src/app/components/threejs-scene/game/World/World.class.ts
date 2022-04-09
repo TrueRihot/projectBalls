@@ -4,7 +4,6 @@ import Resources from "../utils/resources.class";
 import Table from "./Table.class";
 import {Ball, Playball} from "./Ball.class";
 import Physics from "./Physics.class";
-import Floor from "./Floor.class";
 
 export default class World
 {

@@ -67,6 +67,10 @@ export default class Camera {
 
   update()
   {
+    if (this.state === 'local') {
+      const pos = this.game.world.ballsArray[0].mesh.position;
+      this.controls.target.set(pos.x, pos.y, pos.z);
+    }
       this.controls.update();
   }
 
@@ -83,10 +87,8 @@ export default class Camera {
       this.controls.minDistance = 3.1;
       return;
     }
-    const pos = this.game.world.ballsArray[0].mesh.position;
     this.controls.maxDistance = 1.5;
     this.controls.minDistance = 1;
-    this.controls.target.set(pos.x, pos.y, pos.z);
   }
 
   addControlDebug() {
