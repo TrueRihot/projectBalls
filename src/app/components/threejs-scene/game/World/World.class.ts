@@ -2,9 +2,8 @@ import {Game, gameInstance} from '../Game.class'
 import Environment from './Environment.class'
 import Resources from "../utils/resources.class";
 import Table from "./Table.class";
-import {Ball} from "./Ball.class";
+import {Ball, Playball} from "./Ball.class";
 import Physics from "./Physics.class";
-import Floor from "./Floor.class";
 
 export default class World
 {
@@ -36,24 +35,21 @@ export default class World
       //this.floor = new Floor();
       this.createBalls(16);
       this.isLoaded = true;
-      this.ballsArray.forEach((ball) =>
-      {
-        ball.applyForce();
-      });
     });
   }
 
   createBalls(number: number)
   {
+    // Ball 0 is our playball!
     for (let i = 0; i < number; i++)
     {
-      this.ballsArray.push(new Ball(i));
+      i === 0 ? this.ballsArray.push(new Playball()) : this.ballsArray.push(new Ball(i));
     }
   }
 
   update()
   {
-    if (this.isLoaded)
+    if (this.isLoaded && !this.game.gameState.isPaused)
     {
       // Update Physics calculations FIRST
       this.physicsWorld.update();

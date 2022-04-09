@@ -1,3 +1,15 @@
-<app-help></app-help>
 
-<app-threejs-scene></app-threejs-scene>
+
+<app-ui [showUi]="showUi" [players]="gameService.players$ | async" [totalMatchCount]="gameService.totalMatchCount"></app-ui>
+
+<div class="overlay">
+  <button (click)="uiService.showUi()">Show UI</button>
+  <button (click)="uiService.hideUi()">Hide UI</button>
+
+  <button (click)="threeJSAPP.interface.toggleFocusCamera()">ToggleCamera</button>
+  <button (click)="threeJSAPP.interface.togglePauseState()">PlayPause</button>
+</div>
+
+<app-threejs-scene #threeJSAPP
+(gameStateChanged)="temp()"
+></app-threejs-scene>

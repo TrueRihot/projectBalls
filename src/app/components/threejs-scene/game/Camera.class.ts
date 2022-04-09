@@ -13,8 +13,11 @@ export default class Camera {
   private scene: THREE.Scene;
 
   public controls: OrbitControls;
+  private state: 'global' | 'local';
   private debug: Debug;
   private debugFolder : any;
+
+  private debugObj : any;
 
   constructor() {
     this.game = gameInstance;
@@ -22,6 +25,12 @@ export default class Camera {
     this.canvas = this.game.canvas;
     this.scene = this.game.scene;
     this.debug = this.game.debug;
+    this.state = 'global';
+
+    this.debugObj = {
+      toggleStuff: this.switchState.bind(this),
+
+    }
 
     this.setInstance();
     this.setControls();
@@ -30,7 +39,7 @@ export default class Camera {
   setInstance()
   {
       this.camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-      this.camera.position.set(6, 4, 8);
+      this.camera.position.set(3, 4, 3);
       this.scene?.add(this.camera);
   }
 
@@ -40,7 +49,7 @@ export default class Camera {
       this.controls.enableDamping = true;
       this.controls.maxDistance = 10;
       this.controls.minDistance = 3.1;
-      this.controls.maxPolarAngle = 1.16;
+      this.controls.maxPolarAngle = 1.45;
       this.controls.minPolarAngle = 0.73;
       this.controls.target.set(0, 2, 0);
       this.controls.enablePan = false;
@@ -58,7 +67,28 @@ export default class Camera {
 
   update()
   {
+    if (this.state === 'local') {
+      const pos = this.game.world.ballsArray[0].mesh.position;
+      this.controls.target.set(pos.x, pos.y, pos.z);
+    }
       this.controls.update();
+  }
+
+  switchState(state: 'global' | 'local' = undefined): void {
+    if (state === undefined) {
+      this.state = this.state === 'global' ? 'local' : 'global';
+    }else {
+      this.state = state;
+    }
+
+    if (this.state === 'global') {
+      this.controls.reset();
+      this.controls.maxDistance = 10;
+      this.controls.minDistance = 3.1;
+      return;
+    }
+    this.controls.maxDistance = 1.5;
+    this.controls.minDistance = 1;
   }
 
   addControlDebug() {
@@ -76,6 +106,7 @@ export default class Camera {
     controlFolder.add(this.controls, 'maxPolarAngle', 0, Math.PI / 2).step(0.01);
     controlFolder.add(this.controls, 'minPolarAngle', 0, Math.PI / 2).step(0.01);
     controlFolder.add(this.controls, 'reset');
+    controlFolder.add(this.debugObj, 'toggleStuff');
   }
 
 }

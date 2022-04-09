@@ -1,0 +1,67 @@
+.ui-container {
+  // background-color: #ffd90086;
+
+  position: fixed;
+  top: 0;
+  right: 0;
+  // bottom: 0;   // stretch ui -> full page
+  left: 0;
+
+  display: grid;
+  grid-template-areas:
+  ". menu menu menu ."
+  "left left center right right"
+  "left left center right right"
+  ". . . . ."
+  ;
+
+  gap: 1rem;
+  width: 100%;
+
+  & > * {
+    // outline: 3px solid red;
+    background-color: rgba(255, 255, 255, 0.568);
+    border-radius: 1rem;
+    padding: 1rem;
+  }
+
+
+  pointer-events: none;    // REIN!!!
+
+  .menu {
+    grid-area: menu;
+
+    margin: 0 auto;
+    // position: fixed;
+    // // top: 50%;
+    // top: 0;
+    // left: 50%;
+    // transform: translate(-50%, 0);
+
+    pointer-events: all;
+    // width: 50px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: min-content;
+    width: min-content;
+    gap: .5rem;
+
+    button {
+      white-space: nowrap;
+      // font-size: 1.3rem;
+      padding: .2rem .4rem;
+      font-weight: bold;
+      // border-radius: 1rem;
+    }
+  }
+
+  .player-stats-wrapper {
+    grid-area: left;
+  }
+
+  .match-stats-wrapper {
+    grid-area: right;
+  }
+}
