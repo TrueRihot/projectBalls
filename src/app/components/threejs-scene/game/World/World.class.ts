@@ -49,7 +49,7 @@ export default class World
 
   update()
   {
-    if (this.isLoaded)
+    if (this.isLoaded && !this.game.gameState.isPaused)
     {
       // Update Physics calculations FIRST
       this.physicsWorld.update();
