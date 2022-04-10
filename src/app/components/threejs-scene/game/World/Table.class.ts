@@ -7,6 +7,7 @@ import Resources from "../utils/resources.class";
 import Time from "../utils/time.class";
 import Debug from "../utils/Debugger.class";
 import Physics from "./Physics.class";
+import Sizes from '../utils/sizes';
 
 export default class Table
 {
@@ -23,6 +24,7 @@ export default class Table
   size;
 
   sides: Vec3[];
+  pockets: Vec3[];
 
   debugFolder: any;
 
@@ -106,7 +108,7 @@ export default class Table
     // Fixed size of the CURRENT Table
     const size = this.size;
 
-    const modelOffst = .025;
+    const modelOffst = .04;
 
     // getting the 6 sidepannels of our table
     this.sides = [
@@ -117,19 +119,20 @@ export default class Table
       new Vec3(size.x + size.x / 13, size.y, 0),
       new Vec3(-size.x - size.x / 13, size.y, 0)
     ];
-
-    // debug stuff
-    if (this.debug.active) {
-      const temp = new THREE.Mesh(
-         new THREE.BoxGeometry(size.x * 2, size.y * 2 , size.z * 2),
-         new THREE.MeshBasicMaterial({color: 0xffffff})
-      );
-      this.scene.add(temp);
-    }
-
     // Table instance for Physics
     const tableBody = new CANNON.Body();
-    const tableShape = new CANNON.Box(new CANNON.Vec3(size.x, size.y, size.z));
+    // Tweaking the main Table Body with an Offset Cause the corners are round and i dont know how to fix this issue
+    const bodyOffset = .1;
+    const tableShape = new CANNON.Box(new CANNON.Vec3(size.x - bodyOffset, size.y, size.z - bodyOffset));
+
+      // Debugging the Main TableBody in the TRHEE SCENE
+      if (this.debug.active) {
+        const temp = new THREE.Mesh(
+           new THREE.BoxGeometry(size.x * 2 - bodyOffset, size.y * 2 , size.z * 2 - bodyOffset),
+           new THREE.MeshBasicMaterial({color: 0xffffff})
+        );
+        this.scene.add(temp);
+      };
 
     // get boxes for each side of the table
     for (let i = 0; i < this.sides.length; i++) {
@@ -154,6 +157,48 @@ export default class Table
       tableBody.addShape(box ,new Vec3(side.x, side.y, side.z))
     }
 
+    // Add a box to the long sites of the table to emulate the pockets
+    const sideFixes = [
+      new Vec3(0, size.y, size.z + size.x / 10),
+      new Vec3(0, size.y, -size.z - size.x / 10),
+    ]
+
+    for (let i = 0; i < sideFixes.length; i++) {
+      const side = sideFixes[i];
+      const box = this.getSideBoundries(size);
+      const offset = 0.05;
+      box.halfExtents.z = box.halfExtents.z / 2;
+      side.z = i === 0 ? side.z + box.halfExtents.z - offset : side.z - box.halfExtents.z + offset;
+      if (this.debug.active) {
+        const geometry = new THREE.BoxBufferGeometry(box.halfExtents.x * 2, box.halfExtents.y * 2, box.halfExtents.z * 2);
+        const material = new THREE.MeshBasicMaterial({color: 0xff0000});
+        const cube = new THREE.Mesh(geometry, material);
+        cube.position.set(side.x, side.y -.001, side.z);
+        this.scene.add(cube);
+      }
+      tableBody.addShape(box ,new Vec3(side.x, side.y, side.z))
+    }
+
+    // Get each corner of the table and the center of the two lager sides and add a colisionBox for each
+
+
+    // create a plane where the pockets end
+    const pocketPlane = new CANNON.Box(new CANNON.Vec3(size.x * 1.5, size.y / 20, size.x * 1.5));
+    const pocketBody = new CANNON.Body();
+    pocketBody.mass = 0;
+    pocketBody.addShape(pocketPlane, new Vec3(0, size.y - size.y * 0.15, 0));
+    
+    // Debug the plane
+    if (this.debug.active) {
+      const threePocketPlane = new THREE.Mesh(
+        new THREE.BoxBufferGeometry(size.x * 1.5 * 2, size.y / 10 * 2, size.x * 1.5 *2),
+        new THREE.MeshBasicMaterial({color: 0x00ff00})
+      );
+      this.scene.add(threePocketPlane);
+      threePocketPlane.position.set(0, size.y - size.y * 0.15 - size.y / 20 /2, 0);
+      this.scene.add(threePocketPlane);
+    }
+  
     tableBody.material = this.game.world.physicsWorld.tableMaterial;
 
     tableBody.mass = 0;
@@ -164,7 +209,7 @@ export default class Table
 
   // get size of border box. If far side rotate it
   private setBarrierSize(size, isRotated: boolean = false):Vec3 {
-    const sizeOffest = 2.3;
+    const sizeOffest = 2.34;
     if (isRotated) {
       return new Vec3(size.x / 10, size.y / 10,  size.x / sizeOffest + .04);
     }

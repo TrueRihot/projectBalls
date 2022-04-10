@@ -36,7 +36,7 @@ export class Ball {
   }
   private setModel() {
     this.mesh = new THREE.Mesh(
-      new THREE.SphereGeometry(0.1, 128, 128),
+      new THREE.SphereGeometry(0.08, 128, 128),
       new THREE.MeshStandardMaterial({
         envMap: this.game.world.environment.environmentMap,
         metalness: 0.3,
