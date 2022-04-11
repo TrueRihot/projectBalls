@@ -6,7 +6,7 @@
   right: 0;
   bottom: 0;   // stretch ui -> full page
   left: 0;
-  z-index: 2;
+  z-index: 20000;
 
   gap: 1rem;
   width: 100%;
@@ -31,10 +31,10 @@
     width: min-content;
     gap: .5rem;
 
-    button {
+    .menu-button {
       white-space: nowrap;
-      // font-size: 1.3rem;
-      padding: .2rem .4rem;
+      font-size: 1.3rem;
+      padding: 1rem 1.4rem;
       font-weight: bold;
       // border-radius: 1rem;
     }

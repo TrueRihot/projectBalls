@@ -1,15 +1,15 @@
 <div *ngIf="showUi" class="ui-container">
     <div class="menu">
-      <button (click)="newGame($event)">NEW GAME</button>
-      <button (click)="newGame($event)" disabled>LOAD GAME</button>
-      <button (click)="newGame($event)" disabled>SAVE GAME</button>
-      <button (click)="newGame($event)" disabled>DELETE GAME</button>
+      <button class="menu-button" (click)="newGame($event)">NEW GAME</button>
+      <button class="menu-button" (click)="newGame($event)" disabled>LOAD GAME</button>
+      <button class="menu-button" (click)="newGame($event)" disabled>SAVE GAME</button>
+      <button class="menu-button" (click)="newGame($event)" disabled>DELETE GAME</button>
     </div>
 
-    <div class="player-stats-wrapper">
-      <app-player-stats [players]="players" [totalMatchCount]="totalMatchCount"></app-player-stats>
-    </div>
+    <!-- <div class="player-stats-wrapper"> -->
+      <!-- <app-player-stats [players]="players" [totalMatchCount]="totalMatchCount"></app-player-stats> -->
+    <!-- </div> -->
     <div class="match-stats-wrapper">
-      <app-match-stats [players]="players"></app-match-stats>
+      <app-match-stats [game]="game" [players]="players"></app-match-stats>
     </div>
 </div>

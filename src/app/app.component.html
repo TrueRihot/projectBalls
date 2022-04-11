@@ -6,15 +6,15 @@
   <button (click)="uiService.showUi()">Show UI</button>
   <button (click)="uiService.hideUi()">Hide UI</button>
 
+  <hr>
+
   <button (click)="threeJSAPP.interface.toggleFocusCamera()">ToggleCamera</button>
   <button (click)="threeJSAPP.interface.togglePauseState()">PlayPause</button>
 
   <hr>
 
-  <button (click)="threeJSAPP.interface.togglePauseState()">New Game</button>
-
-  <button (click)="threeJSAPP.interface.togglePauseState()">Set Player 1</button>
-  <button (click)="threeJSAPP.interface.togglePauseState()">Set Player 2</button>
+  <button class="player-button-1" (click)="setPlayer('1')">Set Player 1</button>
+  <button class="player-button-2" (click)="setPlayer('2')">Set Player 2</button>
 
   <p><b>Active Player: </b>{{activePlayerName}}</p>
 

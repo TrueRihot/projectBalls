@@ -4,6 +4,7 @@ import { PlayerStatsComponent } from './components/player-stats/player-stats.com
 import { UiComponent } from './components/ui/ui.component';
 import { MatchStatsComponent } from './components/match-stats/match-stats.component';
 import { UiService } from './services/ui.service';
+import { GameService } from '../services/game.service';
 
 
 
@@ -17,10 +18,12 @@ import { UiService } from './services/ui.service';
     CommonModule
   ],
   exports: [
-    UiComponent
+    UiComponent,
+    // Player
   ],
   providers: [
-    UiService
+    UiService,
+    GameService
   ]
 })
 export class UiModule { }
