@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+import { Player } from 'src/app/interfaces/Player';
 
 @Component({
   selector: 'app-match-stats',
@@ -6,6 +7,8 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./match-stats.component.scss']
 })
 export class MatchStatsComponent implements OnInit {
+
+  @Input() players: Player[] = [];
 
   constructor() { }
 
