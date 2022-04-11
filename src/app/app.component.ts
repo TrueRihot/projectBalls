@@ -25,4 +25,8 @@ export class AppComponent implements AfterViewInit{
   temp() {
   }
 
+  public get activePlayerName(): string {
+    return '[active player name]';
+  }
+
 }

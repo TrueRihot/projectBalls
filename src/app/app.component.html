@@ -8,6 +8,19 @@
 
   <button (click)="threeJSAPP.interface.toggleFocusCamera()">ToggleCamera</button>
   <button (click)="threeJSAPP.interface.togglePauseState()">PlayPause</button>
+
+  <hr>
+
+  <button (click)="threeJSAPP.interface.togglePauseState()">New Game</button>
+
+  <button (click)="threeJSAPP.interface.togglePauseState()">Set Player 1</button>
+  <button (click)="threeJSAPP.interface.togglePauseState()">Set Player 2</button>
+
+  <p><b>Active Player: </b>{{activePlayerName}}</p>
+
+  <button (click)="threeJSAPP.interface.togglePauseState()">Sink Ball for active player</button>
+
+
 </div>
 
 <app-threejs-scene #threeJSAPP
