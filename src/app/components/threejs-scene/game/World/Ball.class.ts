@@ -85,9 +85,8 @@ export class Ball {
     // as any because vec3 == Vector3
     this.mesh.position.copy(this.body.position as any);
     this.mesh.quaternion.copy(this.body.quaternion as any);
-    const meshPosition = this.mesh.position;
     // Shadow Update
-    this.shadow.position.set(meshPosition.x, this.table.size.y + .01 , meshPosition.z);
+    this.updateShadow();
     // @ts-ignore Dont know why this is needed
     this.mesh.material.color.set('#ffffff');
   }
@@ -104,6 +103,15 @@ export class Ball {
   spawn(x: number, y: number, z: number) {
     this.body.position.set(x, y, z);
     this.body.sleepState = CANNON.Body.AWAKE;
+  }
+
+  private updateShadow() {
+    const meshPosition = this.mesh.position;
+    const tableHeight = this.table.size.y;
+    const offsetToTable = meshPosition.y - tableHeight;
+    this.shadow.position.set(meshPosition.x, this.table.size.y + .01 , meshPosition.z);
+    // @ts-ignore
+    this.shadow.material.opacity = offsetToTable > 0 ? ( offsetToTable * -1.4 ) + 0.5 : 0;
   }
 }
 
