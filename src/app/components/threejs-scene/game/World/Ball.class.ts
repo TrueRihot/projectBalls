@@ -36,7 +36,7 @@ export class Ball {
   }
   private setModel() {
     this.mesh = new THREE.Mesh(
-      new THREE.SphereGeometry(0.08, 128, 128),
+      new THREE.SphereGeometry(0.09, 128, 128),
       new THREE.MeshStandardMaterial({
         envMap: this.game.world.environment.environmentMap,
         metalness: 0.3,
@@ -67,14 +67,14 @@ export class Ball {
   }
 
   private setPhysics() {
-    const shape = new CANNON.Sphere(0.1);
+    const shape = new CANNON.Sphere(0.09);
     this.body = new CANNON.Body({
       mass: 1,
       material: this.physicsWorld.ballMaterial,
       position: new CANNON.Vec3(this.debugPosition.x ,2,this.debugPosition.z),
       shape,
-      linearDamping: 0.1,
-      angularDamping: 0.1,
+      linearDamping: 0.2,
+      angularDamping: 0.2,
       sleepTimeLimit: 50,
     });
     this.physicsWorld.physicsWorld.addBody(this.body);
@@ -90,6 +90,20 @@ export class Ball {
     this.shadow.position.set(meshPosition.x, this.table.size.y + .01 , meshPosition.z);
     // @ts-ignore Dont know why this is needed
     this.mesh.material.color.set('#ffffff');
+  }
+
+  respawnRandomly() {
+    this.debugPosition = {
+      x: Math.random() * 2 - 1,
+      y: Math.random() * 1 + 2,
+      z: Math.random() * 2 - 1
+    }
+    this.spawn(this.debugPosition.x, this.debugPosition.y, this.debugPosition.z);
+  }
+
+  spawn(x: number, y: number, z: number) {
+    this.body.position.set(x, y, z);
+    this.body.sleepState = CANNON.Body.AWAKE;
   }
 }
 

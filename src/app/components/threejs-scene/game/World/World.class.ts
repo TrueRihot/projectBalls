@@ -59,4 +59,11 @@ export default class World
       });
     }
   }
+
+  respawnBallsRandomly() {
+    this.ballsArray.forEach((ball) =>
+    {
+      ball.respawnRandomly();
+    });
+  }
 }
