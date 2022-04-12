@@ -101,7 +101,10 @@ export class Ball {
   }
 
   spawn(x: number, y: number, z: number) {
+    this.body.velocity.set(0, 0, 0);
+    this.body.angularVelocity.set(0, 0, 0);
     this.body.position.set(x, y, z);
+    this.body.quaternion.set( 0, 0.6335811, 0.6335811, 0.4440158);
     this.body.sleepState = CANNON.Body.AWAKE;
   }
 

@@ -38,6 +38,10 @@ export default class Interface {
     this.game.world.respawnBallsRandomly();
   }
 
+  public startUpGame() {
+    this.game.world.setupBallgame();
+  }
+
   // This Updates the THREE INTERN gamestate
   // This should be called after the Interface State updated
   private updateGameState() {
