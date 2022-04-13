@@ -11,6 +11,8 @@ import World from "./World/World.class";
 import MouseRaycast from "./World/MouseRaycast.class";
 import Interface from './Interface.class';
 import GameState from 'src/app/interfaces/Gamestate';
+import {Playball} from "./World/Ball.class";
+import {Vector3} from "three";
 
 export let gameInstance: Game;
 
@@ -112,5 +114,17 @@ export class Game {
 
   goForShot() {
     this.mouseRaycaster.record = true;
+  }
+
+  shoot(intensity: number) {
+    const intersection = this.mouseRaycaster.recordedPosition;
+    if(!intersection) return;
+    const playBall = this.world.ballsArray[0] as Playball;
+    const direction = new THREE.Vector3();
+    direction.subVectors(intersection.point, playBall.mesh.getWorldPosition(direction));
+    direction.normalize();
+    playBall.applyForce(intersection.point, direction , intensity);
+
+    this.mouseRaycaster.resetShotPosition();
   }
 }

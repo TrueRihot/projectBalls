@@ -126,11 +126,13 @@ export class Playball extends Ball {
     this.mesh.name = this.name;
   }
 
-  applyForce(face: THREE.Face = undefined) {
-    const direction = face ? face.normal.clone().normalize().multiply(new THREE.Vector3(-1))  : new THREE.Vector3(0) //new THREE.Vector3(Math.random() * 100 -50, 0, Math.random() * 100 - 50).normalize();
-    let force = new CANNON.Vec3(direction.x, direction.y, direction.z);
-    force = force.scale(5);
+  applyForce(point: THREE.Vector3, direction: THREE.Vector3, force: number) {
+    let forceVector = new CANNON.Vec3(direction.x, direction.y, direction.z);
+    forceVector = forceVector.negate();
+    forceVector = forceVector.scale(force * 2);
+    const pointVector = new CANNON.Vec3(point.x, point.y, point.z);
+
     this.body.sleepState = CANNON.Body.AWAKE;
-    this.body.applyLocalForce(force, this.body.position);
+    this.body.applyForce(forceVector, pointVector);
   }
 }

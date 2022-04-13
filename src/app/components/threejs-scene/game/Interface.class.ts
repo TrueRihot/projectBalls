@@ -47,6 +47,10 @@ export default class Interface {
     this.game.goForShot();
   }
 
+  public shoot(intensity: number) {
+    this.game.shoot(intensity);
+  }
+
   // This Updates the THREE INTERN gamestate
   // This should be called after the Interface State updated
   private updateGameState() {

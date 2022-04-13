@@ -12,8 +12,8 @@ export default class MouseRaycast {
 
   intersectionPointer : intersectionBall;
   record: boolean = true;
-  recordedPosition: THREE.Vector3;
-  private playBallIntersection: Intersection<Object3D>;
+  recordedPosition: Intersection<Object3D>;
+  private _playBallIntersection: Intersection<Object3D>;
 
   constructor() {
     this.game = gameInstance;
@@ -36,8 +36,8 @@ export default class MouseRaycast {
   }
 
   private saveCurrentShotPosition() {
-    if(!this.intersects.length || !this.playBallIntersection) return;
-    this.recordedPosition = this.playBallIntersection.point;
+    if(!this.intersects.length || !this._playBallIntersection) return;
+    this.recordedPosition = this._playBallIntersection;
   }
 
   resetShotPosition() {
@@ -64,7 +64,7 @@ export default class MouseRaycast {
         if(i > 2) break;
         const intersectsObj = this.intersects[i];
         if(intersectsObj.object.name.includes('playball')) {
-          this.playBallIntersection = intersectsObj;
+          this._playBallIntersection = intersectsObj;
           this.intersectionPointer.setPosition(intersectsObj.point);
           !this.intersectionPointer.isInScene ? this.intersectionPointer.toggleInScene() : null;
           return;
@@ -72,11 +72,11 @@ export default class MouseRaycast {
       }
     }
 
-    this.playBallIntersection = null;
+    this._playBallIntersection = null;
 
     if (this.recordedPosition) {
       !this.intersectionPointer.isInScene ? this.intersectionPointer.toggleInScene() : null;
-      this.intersectionPointer.setPosition(this.recordedPosition);
+      this.intersectionPointer.setPosition(this.recordedPosition.point);
       return;
     }
     this.intersectionPointer.isInScene && !this.recordedPosition ? this.intersectionPointer.toggleInScene() : null;
