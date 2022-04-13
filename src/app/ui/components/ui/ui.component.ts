@@ -5,6 +5,7 @@ import { Player } from 'src/app/interfaces/Player';
 import { GameService } from 'src/app/services/game.service';
 import { UiService } from '../../services/ui.service';
 
+
 @Component({
   selector: 'app-ui',
   templateUrl: './ui.component.html',
@@ -34,7 +35,7 @@ export class UiComponent implements OnInit, OnDestroy {
 
         this.updateCssVariables(this.game);
 
-        console.log('game update:', this.game);
+        // console.log('game update:', this.game);
       })
     );
   }
@@ -52,7 +53,7 @@ export class UiComponent implements OnInit, OnDestroy {
   }
 
   public newGame(event: Event): void {
-    console.log('start new game');
+    // console.log('start new game');
   }
 
 

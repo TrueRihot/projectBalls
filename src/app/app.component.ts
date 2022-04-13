@@ -3,6 +3,7 @@ import { take } from 'rxjs/operators';
 import { ThreejsSceneComponent } from './components/threejs-scene/threejs-scene.component';
 import GameState from './interfaces/Gamestate';
 import { GameService } from './services/game.service';
+import { ShoutOutService } from './ui/services/shout-out.service';
 import { UiService } from './ui/services/ui.service';
 
 @Component({
@@ -17,7 +18,7 @@ export class AppComponent implements AfterViewInit{
   public game: GameState;
   public showUi: boolean = true;
 
-  constructor(public uiService: UiService, public gameService: GameService) {
+  constructor(public uiService: UiService, public gameService: GameService, private shoutOutService: ShoutOutService) {
   }
   ngAfterViewInit(): void {
     this.gameService.game$.pipe(take(1)).subscribe(game => {
@@ -45,5 +46,9 @@ export class AppComponent implements AfterViewInit{
     this.gameService.updateGame({
       activePlayerId: playerId,
     })
+  }
+
+  public shoutOut(): void {
+    this.shoutOutService.shout('GET READY!!!');
   }
 }

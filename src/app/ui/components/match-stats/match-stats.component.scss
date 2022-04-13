@@ -6,6 +6,8 @@
   align-items: center;
 
   background-color: var(--activePlayerColor, deeppink);
+
+  transition: background-color 1s ease-out;
 }
 
 .players {

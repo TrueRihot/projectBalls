@@ -76,7 +76,7 @@ export class GameService {
 
     this.players[playerIndex] = updatedPlayer;
 
-    console.log('updated player: ', updatedPlayer);
+    // console.log('updated player: ', updatedPlayer);
     this.players$$.next(this.players);
 
     return true;

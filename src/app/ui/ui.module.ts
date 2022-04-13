@@ -5,6 +5,7 @@ import { UiComponent } from './components/ui/ui.component';
 import { MatchStatsComponent } from './components/match-stats/match-stats.component';
 import { UiService } from './services/ui.service';
 import { GameService } from '../services/game.service';
+import { ShoutOutComponent } from './components/shout-out/shout-out.component';
 
 
 
@@ -13,12 +14,14 @@ import { GameService } from '../services/game.service';
     UiComponent,
     PlayerStatsComponent,
     MatchStatsComponent,
+    ShoutOutComponent,
   ],
   imports: [
     CommonModule
   ],
   exports: [
     UiComponent,
+    ShoutOutComponent,
     // Player
   ],
   providers: [

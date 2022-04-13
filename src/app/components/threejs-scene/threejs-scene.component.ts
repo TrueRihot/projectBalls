@@ -24,7 +24,7 @@ export class ThreejsSceneComponent implements OnInit, AfterViewInit, OnDestroy {
   ngOnInit() {
 
     this.gameService.game$.subscribe(game => {
-      console.log('threejs-scene: received game update', game);
+      // console.log('threejs-scene: received game update', game);
       // this.gameStateChanged.emit(game) // ERROR: causes endless loop -> call stack exceeded. WHAT TO DO TO KEEP DATA SYNCED????
     });
   }
@@ -43,7 +43,7 @@ export class ThreejsSceneComponent implements OnInit, AfterViewInit, OnDestroy {
     // This should probably get hooked up to a Service to communicate with the UI
     this.game.interface._StateChanged.subscribe(gameState => {
       this.gameStateChanged.emit(gameState);
-      console.log('gameState changed', gameState);
+      // console.log('gameState changed', gameState);
     })
   }
 }

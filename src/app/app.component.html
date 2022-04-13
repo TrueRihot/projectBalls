@@ -18,7 +18,8 @@
 
   <p><b>Active Player: </b>{{activePlayerName}}</p>
 
-  <button (click)="threeJSAPP.interface.togglePauseState()">Sink Ball for active player</button>
+  <button (click)="shoutOut()">shout out</button>
+  <button disabled (click)="threeJSAPP.interface.togglePauseState()">Sink Ball for active player</button>
 
 
 </div>
@@ -26,3 +27,6 @@
 <app-threejs-scene #threeJSAPP
 (gameStateChanged)="temp()"
 ></app-threejs-scene>
+
+
+<app-shout-out></app-shout-out>
