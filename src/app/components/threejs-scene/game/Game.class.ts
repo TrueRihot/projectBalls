@@ -109,4 +109,8 @@ export class Game {
     }
     return gameInstance;
   }
+
+  goForShot() {
+    this.mouseRaycaster.record = true;
+  }
 }

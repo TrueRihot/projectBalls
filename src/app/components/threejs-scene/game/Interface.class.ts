@@ -42,6 +42,11 @@ export default class Interface {
     this.game.world.setupBallgame();
   }
 
+  public goForShot() {
+    this.toggleFocusCamera();
+    this.game.goForShot();
+  }
+
   // This Updates the THREE INTERN gamestate
   // This should be called after the Interface State updated
   private updateGameState() {
