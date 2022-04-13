@@ -18,7 +18,11 @@
 
   <p><b>Active Player: </b>{{activePlayerName}}</p>
 
-  <button (click)="shoutOut()">shout out</button>
+  <button (click)="shoutOut('get ready')">shoutout: get ready</button>
+  <button (click)="shoutOut('ready player 1')">shoutout: ready player 1</button>
+  <button (click)="shoutOut('ready player 2')">shoutout: ready player 2</button>
+
+
   <button disabled (click)="threeJSAPP.interface.togglePauseState()">Sink Ball for active player</button>
 
 

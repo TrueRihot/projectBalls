@@ -48,7 +48,7 @@ export class AppComponent implements AfterViewInit{
     })
   }
 
-  public shoutOut(): void {
-    this.shoutOutService.shout('GET READY!!!');
+  public shoutOut(txt: string): void {
+    this.shoutOutService.shout(txt);
   }
 }
