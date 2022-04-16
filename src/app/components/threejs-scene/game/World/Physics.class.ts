@@ -11,10 +11,11 @@ export default class Physics {
 
   tableMaterial: CANNON.Material;
   ballMaterial: CANNON.Material;
+  ballBallMaterial: CANNON.ContactMaterial;
   tableBallMaterial: CANNON.ContactMaterial;
 
   constructor() {
-    this.game = gameInstance;;
+    this.game = gameInstance;
     this.time = gameInstance.time;
     // Create a world with gravity
     this.physicsWorld = new CANNON.World();
@@ -41,6 +42,14 @@ export default class Physics {
     this.tableMaterial = new CANNON.Material('table');
     this.ballMaterial = new CANNON.Material('ball');
 
+    // Creating a Ball Contact material for other Balls;
+    this.ballBallMaterial = new CANNON.ContactMaterial(
+      this.ballMaterial,
+      this.ballMaterial,
+      {
+        restitution: 0.8
+      });
+
     // Instanciateing Table Ball Material
     this.tableBallMaterial = new CANNON.ContactMaterial(
       this.ballMaterial,
@@ -52,7 +61,7 @@ export default class Physics {
       }
     );
     this.physicsWorld.addContactMaterial(this.tableBallMaterial);
-
+    this.physicsWorld.addContactMaterial(this.ballBallMaterial);
   };
 
 

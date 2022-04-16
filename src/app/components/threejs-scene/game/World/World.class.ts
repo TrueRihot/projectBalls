@@ -15,7 +15,7 @@ export default class World
 
   // Objects
   floor;
-  table;
+  table: Table;
   environment: Environment;
   ballsArray: Ball[] = [];
 
@@ -59,4 +59,58 @@ export default class World
       });
     }
   }
+
+  respawnBallsRandomly() {
+    this.ballsArray.forEach((ball) =>
+    {
+      ball.respawnRandomly();
+    });
+  }
+
+  setupBallgame() {
+
+    const sizeRef = this.table.size;
+    const ballSize = 0.09;
+    const offset = 0.1;
+
+    const calcOffsetForRow = (rowOffset: number) => {
+      return rowOffset * (ballSize + offset / 1.5);
+    };
+
+    const calcOffsetForColumn = (columnOffset: number) => {
+      return columnOffset * (ballSize / 2 + offset / 2);
+    };
+
+    const ballGamePositionMap: {x: number, z: number}[] =
+      [
+        {x: sizeRef.x / 2, z: 0},
+        {x: -sizeRef.x / 2 + calcOffsetForRow(2), z: calcOffsetForColumn(0)},
+        {x: -sizeRef.x / 2 + calcOffsetForRow(1), z: calcOffsetForColumn(1)},
+        {x: -sizeRef.x / 2 + calcOffsetForRow(1), z: calcOffsetForColumn(- 1)},
+        {x: -sizeRef.x / 2 + calcOffsetForRow(0), z: calcOffsetForColumn(2)},
+        {x: -sizeRef.x / 2 + calcOffsetForRow(0), z: calcOffsetForColumn(0)},
+        {x: -sizeRef.x / 2 + calcOffsetForRow(0), z: calcOffsetForColumn(-2)},
+        {x: -sizeRef.x / 2 + calcOffsetForRow(-1), z: calcOffsetForColumn(1)},
+        {x: -sizeRef.x / 2 + calcOffsetForRow(-1), z: calcOffsetForColumn(-1)},
+        {x: -sizeRef.x / 2 + calcOffsetForRow(-1), z: calcOffsetForColumn(3)},
+        {x: -sizeRef.x / 2 + calcOffsetForRow(-1), z: calcOffsetForColumn(-3)},
+        {x: -sizeRef.x / 2 + calcOffsetForRow(-2), z: calcOffsetForColumn(0)},
+        {x: -sizeRef.x / 2 + calcOffsetForRow(-2), z: calcOffsetForColumn(2)},
+        {x: -sizeRef.x / 2 + calcOffsetForRow(-2), z: calcOffsetForColumn(-2)},
+        {x: -sizeRef.x / 2 + calcOffsetForRow(-2), z: calcOffsetForColumn(4)},
+        {x: -sizeRef.x / 2 + calcOffsetForRow(-2), z: calcOffsetForColumn(-4)},
+      ];
+
+    // debug stuff
+    while (ballGamePositionMap.length < this.ballsArray.length) {
+      ballGamePositionMap.push({x: 10, z: 10});
+    }
+
+    this.ballsArray.forEach((ball, index) =>
+    {
+      const ballGamePosition = ballGamePositionMap[index];
+      ball.spawn(ballGamePosition.x, this.table.size.y + 0.001, ballGamePosition.z);
+    });
+  }
+
 }

@@ -26,6 +26,10 @@
   <button disabled (click)="threeJSAPP.interface.togglePauseState()">Sink Ball for active player</button>
 
 
+  <button (click)="threeJSAPP.interface.respawnBallsRandomly()">Respawn random</button>
+  <button (click)="threeJSAPP.interface.startUpGame()">Set up game</button>
+  <button (click)="threeJSAPP.interface.despawnAll()">Despawn All</button>
+  <button (click)="threeJSAPP.interface.shoot(100)">SHOOT</button>
 </div>
 
 <app-threejs-scene #threeJSAPP

@@ -1,7 +1,7 @@
 import * as THREE from 'three';
 import {Game, gameInstance} from "../Game.class";
 import Sizes from "../utils/sizes";
-import {Mesh} from "three";
+import {Intersection, Object3D} from "three";
 
 export default class MouseRaycast {
   game: Game;
@@ -11,6 +11,9 @@ export default class MouseRaycast {
   intersects: THREE.Intersection[];
 
   intersectionPointer : intersectionBall;
+  record: boolean = true;
+  recordedPosition: Intersection<Object3D>;
+  private _playBallIntersection: Intersection<Object3D>;
 
   constructor() {
     this.game = gameInstance;
@@ -29,13 +32,25 @@ export default class MouseRaycast {
 
   pointerDown(event: MouseEvent) {
     this.pointerMove(event);
-    const intersectionObj = this.intersects[0];
-    if (this.intersects.length > 0 && intersectionObj.object.name.includes('playball')) {
-    }
+    if (this.record === true) this.saveCurrentShotPosition();
+  }
+
+  private saveCurrentShotPosition() {
+    if(!this.intersects.length || !this._playBallIntersection) return;
+    this.recordedPosition = this._playBallIntersection;
+  }
+
+  resetShotPosition() {
+    this.recordedPosition = null;
+  }
+
+  resetRecordingState() {
+    this.record = false;
   }
 
   update() {
     if (!this.game.mouseRaycaster) return;
+
     this.raycaster.setFromCamera(this.pointer, this.game.camera.camera);
     this.intersects = this.raycaster.intersectObject(this.game.scene, true);
 
@@ -44,20 +59,27 @@ export default class MouseRaycast {
       //const intersectionObject = this.intersects[0].object as Mesh;
       // @ts-ignore
       //intersectionObject.material.color.set(0x00ff00);
-
-
       // This loop gets the first ball infront of the raycaster and uses the intersectionBall to show the intersected point
       for(let i = 0; i < this.intersects.length; i++) {
         if(i > 2) break;
         const intersectsObj = this.intersects[i];
         if(intersectsObj.object.name.includes('playball')) {
+          this._playBallIntersection = intersectsObj;
           this.intersectionPointer.setPosition(intersectsObj.point);
           !this.intersectionPointer.isInScene ? this.intersectionPointer.toggleInScene() : null;
           return;
         }
       }
     }
-    this.intersectionPointer.isInScene ? this.intersectionPointer.toggleInScene() : null;
+
+    this._playBallIntersection = null;
+
+    if (this.recordedPosition) {
+      !this.intersectionPointer.isInScene ? this.intersectionPointer.toggleInScene() : null;
+      this.intersectionPointer.setPosition(this.recordedPosition.point);
+      return;
+    }
+    this.intersectionPointer.isInScene && !this.recordedPosition ? this.intersectionPointer.toggleInScene() : null;
   }
 }
 

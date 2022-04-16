@@ -39,6 +39,27 @@ export default class Interface {
     this.updateGameState();
   }
 
+  public respawnBallsRandomly() {
+    this.game.world.respawnBallsRandomly();
+  }
+
+  public startUpGame() {
+    this.game.world.setupBallgame();
+  }
+
+  public goForShot() {
+    this.toggleFocusCamera();
+    this.game.goForShot();
+  }
+
+  public despawnAll(){
+    this.game.despawnAll();
+  }
+
+  public shoot(intensity: number) {
+    this.game.shoot(intensity);
+  }
+
   // This Updates the THREE INTERN gamestate
   // This should be called after the Interface State updated
   private updateGameState() {
