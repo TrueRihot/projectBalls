@@ -12,7 +12,6 @@ import MouseRaycast from "./World/MouseRaycast.class";
 import Interface from './Interface.class';
 import GameState from 'src/app/interfaces/Gamestate';
 import {Playball} from "./World/Ball.class";
-import {Vector3} from "three";
 
 export let gameInstance: Game;
 
@@ -28,6 +27,11 @@ export class Game {
   public world: World;
   public mouseRaycaster: MouseRaycast;
   public debug: Debug;
+  private debugFolder: any;
+
+  public debugObject = {
+    shotMultiplyer: 3
+  };
 
   public gameState: GameState;
   public interface: Interface;
@@ -55,6 +59,16 @@ export class Game {
     this.sizes.on('resize', () => {
       this.resize();
     });
+
+    if (this.debug.active) {
+      this.initDebug();
+    }
+
+  }
+
+  initDebug() {
+    this.debugFolder = this.debug.ui.addFolder('Game');
+    this.debugFolder.add(this.debugObject, 'shotMultiplyer').name('shotMultiplyer').min(1).max(10).step(.2);
   }
 
   resize() {
@@ -116,15 +130,30 @@ export class Game {
     this.mouseRaycaster.record = true;
   }
 
+  despawnAll() {
+    this.world.ballsArray.forEach(ball => {
+      ball.despawn();
+    });
+  }
+
   shoot(intensity: number) {
+    intensity *= this.debugObject.shotMultiplyer;
+    // get the recorded Position where the mouse clicked
     const intersection = this.mouseRaycaster.recordedPosition;
+    // If there wasn't any recorded position return
+    // TODO: we should return an error if there is no intersection since there is no shot to be made
     if(!intersection) return;
+    // getting our playball
     const playBall = this.world.ballsArray[0] as Playball;
+
+    // calculating the direction of the shot between the intersected point and the middle of our playball
     const direction = new THREE.Vector3();
     direction.subVectors(intersection.point, playBall.mesh.getWorldPosition(direction));
+    // normalize the direction to get consistent shots
     direction.normalize();
+    // Lets go and take our shot. (yay)
     playBall.applyForce(intersection.point, direction , intensity);
-
+    // remove the recent recorded position
     this.mouseRaycaster.resetShotPosition();
   }
 }

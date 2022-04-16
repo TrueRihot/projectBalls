@@ -47,6 +47,10 @@ export default class Interface {
     this.game.goForShot();
   }
 
+  public despawnAll(){
+    this.game.despawnAll();
+  }
+
   public shoot(intensity: number) {
     this.game.shoot(intensity);
   }

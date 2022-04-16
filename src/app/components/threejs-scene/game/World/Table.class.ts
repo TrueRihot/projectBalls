@@ -185,9 +185,9 @@ export default class Table
     // Get each corner of the table and the center of the two lager sides and add a colisionBox for each
     const corners = [
       new Vec3(size.x + size.x / 10, size.y, size.z + size.x / 10),
-      new Vec3(-size.x + size.x / 10, size.y, size.z + size.x / 10),
+      new Vec3(-size.x - size.x / 10, size.y, size.z + size.x / 10),
       new Vec3(-size.x - size.x / 10, size.y, -size.z - size.x / 10),
-      new Vec3(size.x - size.x / 10, size.y, -size.z - size.x / 10),
+      new Vec3(size.x + size.x / 10, size.y, -size.z - size.x / 10),
     ];
 
     // This function is HELLA scuffed and needs some desprate refactoring

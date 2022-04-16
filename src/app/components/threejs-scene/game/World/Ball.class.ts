@@ -16,6 +16,7 @@ export class Ball {
   shadow: THREE.Mesh;
   body: CANNON.Body;
   number: number;
+  spawned: boolean = false;
 
   constructor(number: number = -1) {
     this.game = gameInstance;
@@ -33,6 +34,8 @@ export class Ball {
     this.setModel();
     this.setShadow();
     this.setPhysics();
+
+    this.respawnRandomly();
   }
   private setModel() {
     this.mesh = new THREE.Mesh(
@@ -48,7 +51,6 @@ export class Ball {
     this.mesh.castShadow = false;
     this.mesh.receiveShadow = false;
     this.mesh.name = this.name + this.number;
-    this.scene.add(this.mesh);
   }
 
   private setShadow () {
@@ -63,7 +65,6 @@ export class Ball {
     );
     shadow.rotateX(-Math.PI / 2);
     this.shadow = shadow;
-    this.scene.add(this.shadow);
   }
 
   private setPhysics() {
@@ -77,11 +78,10 @@ export class Ball {
       angularDamping: 0.2,
       sleepTimeLimit: 50,
     });
-    this.physicsWorld.physicsWorld.addBody(this.body);
-    this.body.position.set(this.debugPosition.x, 2, this.debugPosition.z);
   }
 
   update() {
+    if(!this.spawned) return;
     // as any because vec3 == Vector3
     this.mesh.position.copy(this.body.position as any);
     this.mesh.quaternion.copy(this.body.quaternion as any);
@@ -101,11 +101,27 @@ export class Ball {
   }
 
   spawn(x: number, y: number, z: number) {
+    if(!this.spawned) {
+      this.physicsWorld.physicsWorld.addBody(this.body);
+      this.scene.add(this.mesh);
+      this.scene.add(this.shadow);
+      this.body.position.set(this.debugPosition.x, 2, this.debugPosition.z);  
+    }
+
     this.body.velocity.set(0, 0, 0);
     this.body.angularVelocity.set(0, 0, 0);
     this.body.position.set(x, y, z);
     this.body.quaternion.set( 0, 0.6335811, 0.6335811, 0.4440158);
     this.body.sleepState = CANNON.Body.AWAKE;
+
+    this.spawned = true;
+  }
+
+  despawn() {
+    this.physicsWorld.physicsWorld.remove(this.body);
+    this.scene.remove(this.mesh);
+    this.scene.remove(this.shadow);
+    this.spawned = false;
   }
 
   private updateShadow() {
