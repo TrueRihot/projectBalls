@@ -16,6 +16,8 @@ import { UiModule } from './ui/ui.module';
     AppRoutingModule,
     UiModule,
   ],
+  exports: [
+  ],
   providers: [],
   bootstrap: [AppComponent]
 })

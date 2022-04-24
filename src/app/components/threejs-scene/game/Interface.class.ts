@@ -7,8 +7,13 @@ export default class Interface {
  private game: Game;
  // Those are the default gameState values
  private gameState: GameState = {
-    isPaused: false,
-    isLoaded: false
+   isPaused: false,
+   isLoaded: false,
+   hasStarted: false,
+
+    activePlayerId: '1',     // player 1 starts
+    activePlayer: null,
+    players: []
  };
 
   constructor() {

@@ -1,5 +1,35 @@
+
+
 .overlay {
   position: absolute;
   top: 0;
   left: 0;
+
+  display: flex;
+  flex-direction: column;
+  gap: .5rem;
+
+  padding: 1rem;
+  background-color: white;
+
+  button {
+    padding: .5rem .5rem;
+
+    font-weight: bold;
+
+  }
+
+  .player-button-1 {
+    background-color: var(--player-color-1, deeppink);
+  }
+
+  .player-button-2 {
+    background-color: var(--player-color-2, deeppink);
+  }
+
+  hr {
+    width: 100%;
+  }
 }
+
+

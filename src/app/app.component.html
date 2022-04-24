@@ -6,8 +6,26 @@
   <button (click)="uiService.showUi()">Show UI</button>
   <button (click)="uiService.hideUi()">Hide UI</button>
 
+  <hr>
+
   <button (click)="threeJSAPP.interface.toggleFocusCamera()">ToggleCamera</button>
   <button (click)="threeJSAPP.interface.togglePauseState()">PlayPause</button>
+
+  <hr>
+
+  <button class="player-button-1" (click)="setPlayer('1')">Set Player 1</button>
+  <button class="player-button-2" (click)="setPlayer('2')">Set Player 2</button>
+
+  <p><b>Active Player: </b>{{activePlayerName}}</p>
+
+  <button (click)="shoutOut('get ready')">shoutout: get ready</button>
+  <button (click)="shoutOut('ready player 1')">shoutout: ready player 1</button>
+  <button (click)="shoutOut('ready player 2')">shoutout: ready player 2</button>
+
+
+  <button disabled (click)="threeJSAPP.interface.togglePauseState()">Sink Ball for active player</button>
+
+
   <button (click)="threeJSAPP.interface.respawnBallsRandomly()">Respawn random</button>
   <button (click)="threeJSAPP.interface.startUpGame()">Set up game</button>
   <button (click)="threeJSAPP.interface.despawnAll()">Despawn All</button>
@@ -17,3 +35,6 @@
 <app-threejs-scene #threeJSAPP
 (gameStateChanged)="temp()"
 ></app-threejs-scene>
+
+
+<app-shout-out></app-shout-out>
